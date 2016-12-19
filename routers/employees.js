@@ -8,7 +8,6 @@ var urlEncodedParser = bodyParser.urlencoded({extended:true});
 var connectionString = 'postgres://localhost:5432/eight_bit_database';
 
 router.post('/addEmployee', urlEncodedParser, function(req, res){
-  var allEmployees = [];
   console.log('In addEmployee. Employee to add: ', req.body);
   //connect to db
   pg.connect(connectionString, function(err, client, done) {

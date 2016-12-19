@@ -5,6 +5,21 @@ var pg = require('pg');
 
 var connectionString = 'postgres://localhost:5432/eight_bit_database';
 
+router.post('/addTable', urlEncodedParser, function(req, res){
+  console.log('In addTable. Table to add: ', req.body);
+  //connect to db
+  pg.connect(connectionString, function(err, client, done) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Connected to database from addTable.');
+      client.query('INSERT INTO tables (name, capacity, status, employee_id) VALUES ($1, $2, $3, $4);', [req.body.name, req.body.capacity, req.body.status, req.body.employee_id]);
+      done();
+      res.send({response: 'addTable Complete.'});
+    }
+  });
+});
+
 router.get('/allTables', function(req, res){
   var allTables = [];
   console.log('In GETallTables.');

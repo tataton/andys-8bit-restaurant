@@ -73,8 +73,6 @@ var createEmployee = function(){
   }).done(refreshDisplay);
 }; // end createEmployee
 
-/*
-
 var createTable = function(){
   console.log('In createTable.');
   // get user input
@@ -82,17 +80,18 @@ var createTable = function(){
   var tableCapacity = document.getElementById('capacityIn').value;
   // table object for new table
   var newTable = {
-    'name': tableName,
-    'capacity': tableCapacity,
-    'server': -1,
-    'status': 'empty'
+    name: tableName,
+    capacity: tableCapacity,
+    employee_id: -1,
+    status: 'empty'
   };
   // push new obejct into tables array
-  tables.push( newTable );
-  console.log( 'added table: ' + newTable.name );
-  // update output
-  listTables();
+  $.post('/tables/addTable', newTable, function(){
+    console.log('Employee AJAX POST success.');
+  }).done(refreshDisplay);
 }; // end createTable
+
+/*
 
 var cycleStatus = function( index ){
   console.log( 'in cycleStatus: ' + index );
@@ -113,41 +112,5 @@ var cycleStatus = function( index ){
   // show tables on DOM
   listTables();
 }; // end cycleStatus
-
-
-var listTables = function(){
-  console.log( "in listTables" );
-  // target our output div
-  document.getElementById('tablesOutput').innerHTML = '';
-  // loop through the tables array and display each table
-
-  // select to assign a server to this table
-  var selectText = '<select>';
-  for (var i = 0; i < employees.length; i++) {
-    selectText+= '<option value=' + i + '>'+ employees[i].firstName + ' ' + employees[i].lastName + '</option>';
-  }
-  selectText += '</select>';
-  // display employees
-  for( i=0; i< tables.length; i++ ){
-    // status is a button that, when clicked runs cycleStatus for this table
-    var line = tables[i].name + " - capacity: " + tables[i].capacity + ', server: ' + selectText + ', status: <button onClick="cycleStatus(' + i + ')">' + tables[i].status + "</button>";
-    // add line to output div
-    document.getElementById('tablesOutput').innerHTML += '<p>' + line + '</p>';
-  }
-}; // end listTables
-
-var getEmployees = function(){
-  console.log('In getEmployees');
-  // ajax call to server to get employees
-  $.ajax({
-    url: '/employees/getEmployees',
-    type: 'GET',
-    success: function(responseObject){
-      console.log('Employee AJAX GET success. Employees: ', responseObject);
-      listEmployees(responseObject.employeeArray);
-    } // end success
-  }); //end ajax
-  // display on DOM with buttons that allow edit of each
-}; // end getKoalas
 
 */
